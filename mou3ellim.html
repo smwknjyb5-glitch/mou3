@@ -1,0 +1,186 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>المدرّس اللغوي</title>
+    <meta property="og:image" content="https://smwknjyb5-glitch.github.io/mou3/mou3.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="صورة تطبيق معلم اللغات ">
+<style>
+:root{color-scheme:dark;--bg:#0b1d3a;--card:#13294f;--line:#2a4574;--gold:#e6b94d;--txt:#f3efe2;--mut:#9fb0cc;--ok:#3ecf8e;--bad:#ef6b6b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg) radial-gradient(1.5px 1.5px at 20% 30%,#fff8 50%,transparent),radial-gradient(1.5px 1.5px at 70% 20%,#fff6 50%,transparent),radial-gradient(1.5px 1.5px at 85% 70%,#fff8 50%,transparent),radial-gradient(1.5px 1.5px at 35% 80%,#fff6 50%,transparent);color:var(--txt);font-family:"Segoe UI",Tahoma,Arial,sans-serif;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+h1{margin:4px 0 12px;font-size:1.4rem;color:var(--gold);text-align:center}
+.langs,.tabs{display:flex;gap:8px;margin-bottom:12px}
+.langs button,.tabs button{flex:1;padding:10px 6px;border:1px solid var(--line);background:var(--card);color:var(--txt);border-radius:12px;font-size:1rem;cursor:pointer}
+.langs button.on{background:var(--gold);color:#1a1a1a;font-weight:700}
+.tabs button.on{border-color:var(--gold);color:var(--gold);font-weight:700}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
+.let{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;color:var(--txt)}
+.let b{display:block;font-size:1.7rem;color:var(--gold)}
+.let small{color:var(--mut)}
+h3{color:var(--gold);margin:16px 0 8px}
+.w{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:6px;background:var(--bg);border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.w .t{font-size:1.2rem;font-weight:700}
+.w .m{color:var(--mut)}
+.big{font-size:2.2rem;text-align:center;color:var(--gold);margin:10px 0;font-weight:700}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{padding:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);border-radius:12px;font-size:1.05rem;cursor:pointer}
+.opt.ok{background:var(--ok);color:#06210f;border-color:var(--ok)}
+.opt.bad{background:var(--bad);color:#2b0606;border-color:var(--bad)}
+.act{padding:10px 18px;border:0;border-radius:12px;background:var(--gold);color:#1a1a1a;font-size:1rem;font-weight:700;cursor:pointer;margin:4px}
+.c{text-align:center}
+.bar{height:8px;background:var(--bg);border-radius:8px;overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;background:var(--gold)}
+.msg{margin-top:12px;min-height:1.4em;text-align:center}
+.mut{color:var(--mut);font-size:.9rem}
+.chip{display:inline-block;padding:8px 12px;margin:4px;border:1px solid var(--gold);border-radius:20px;background:var(--bg);color:var(--txt);font-size:1.1rem;cursor:pointer}.ans{min-height:56px;border:2px dashed var(--line);border-radius:12px;padding:6px;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>✦ المدرّس اللغوي ✦</h1>
+<div class="langs" id="langs"></div>
+<div class="tabs" id="tabs"></div>
+<div id="warn"></div>
+<div class="box" id="main"></div>
+<p class="mut c">المستوى: مبتدئ · الصوت والنطق يعتمدان على متصفحك</p>
+</div>
+<script>
+const L={
+ar:{n:"العربية",v:"ar-SA",dir:"rtl",
+ let:"أ|ألف;ب|باء;ت|تاء;ث|ثاء;ج|جيم;ح|حاء;خ|خاء;د|دال;ذ|ذال;ر|راء;ز|زاي;س|سين;ش|شين;ص|صاد;ض|ضاد;ط|طاء;ظ|ظاء;ع|عين;غ|غين;ف|فاء;ق|قاف;ك|كاف;ل|لام;م|ميم;ن|نون;ه|هاء;و|واو;ي|ياء",
+ w:{"تحيات":"مرحبًا|Hello · Bonjour;مع السلامة|Goodbye · Au revoir;شكرًا|Thank you · Merci;من فضلك|Please · S’il vous plaît;نعم|Yes · Oui;لا|No · Non;صباح الخير|Good morning · Bonjour;تصبح على خير|Good night · Bonne nuit",
+ "أرقام":"واحد|1 · One · Un;اثنان|2 · Two · Deux;ثلاثة|3 · Three · Trois;أربعة|4 · Four · Quatre;خمسة|5 · Five · Cinq;ستة|6 · Six · Six;سبعة|7 · Seven · Sept;ثمانية|8 · Eight · Huit;تسعة|9 · Nine · Neuf;عشرة|10 · Ten · Dix",
+ "ألوان":"أحمر|Red · Rouge;أزرق|Blue · Bleu;أخضر|Green · Vert;أصفر|Yellow · Jaune;أسود|Black · Noir;أبيض|White · Blanc",
+ "حيوانات":"قطة|Cat · Chat;كلب|Dog · Chien;طائر|Bird · Oiseau;سمكة|Fish · Poisson;حصان|Horse · Cheval;أسد|Lion · Lion",
+ "العائلة":"أم|Mother · Mère;أب|Father · Père;أخ|Brother · Frère;أخت|Sister · Sœur;جد|Grandfather · Grand-père;جدة|Grandmother · Grand-mère;ابن|Son · Fils;ابنة|Daughter · Fille;عم|Uncle · Oncle;عمة|Aunt · Tante;زوج|Husband · Mari;زوجة|Wife · Femme;رضيع|Baby · Bébé;عائلة|Family · Famille;الوالدان|Parents · Parents",
+ "الطعام":"خبز|Bread · Pain;ماء|Water · Eau;حليب|Milk · Lait;تفاحة|Apple · Pomme;بيضة|Egg · Œuf;أرز|Rice · Riz;لحم|Meat · Viande;شاي|Tea · Thé;فاكهة|Fruit · Fruit;خضروات|Vegetables · Légumes;جبن|Cheese · Fromage;حساء|Soup · Soupe;سكر|Sugar · Sucre;ملح|Salt · Sel;عصير|Juice · Jus;دجاج|Chicken · Poulet;بطاطس|Potato · Pomme de terre;برتقالة|Orange · Orange",
+ "الجسم":"رأس|Head · Tête;يد|Hand · Main;عين|Eye · Œil;أذن|Ear · Oreille;أنف|Nose · Nez;فم|Mouth · Bouche;قدم|Foot · Pied",
+ "البرمجة":"شيفرة|Code · Code;برنامج|Program · Programme;متغيّر|Variable · Variable;دالة|Function · Fonction;حلقة تكرارية|Loop · Boucle;شرط|Condition · Condition;مصفوفة|Array · Tableau;خطأ برمجي|Bug · Bogue;ملف|File · Fichier;خادم|Server · Serveur;قاعدة بيانات|Database · Base de données;خوارزمية|Algorithm · Algorithme;موقع إلكتروني|Website · Site web;كلمة المرور|Password · Mot de passe;لوحة المفاتيح|Keyboard · Clavier;شاشة|Screen · Écran",
+ "ويب HTML/CSS/JS":"وسم|Tag · Balise;سمة|Attribute · Attribut;عنصر|Element · Élément;رابط|Link · Lien;صورة|Image · Image;زر|Button · Bouton;نمط|Style · Style;لون|Color · Couleur;حدث|Event · Événement;سكربت|Script · Script;فئة|Class · Classe;هامش|Margin · Marge;حد|Border · Bordure;نص|Text · Texte;صفحة|Page · Page"}},
+fr:{n:"Français",v:"fr-FR",dir:"ltr",
+ w:{"تحيات":"Bonjour|مرحبا، صباح الخير;Au revoir|مع السلامة;Merci|شكرًا;S’il vous plaît|من فضلك;Oui|نعم;Non|لا;Bonsoir|مساء الخير;Bonne nuit|تصبح على خير",
+ "أرقام":"Un|1 · واحد;Deux|2 · اثنان;Trois|3 · ثلاثة;Quatre|4 · أربعة;Cinq|5 · خمسة;Six|6 · ستة;Sept|7 · سبعة;Huit|8 · ثمانية;Neuf|9 · تسعة;Dix|10 · عشرة",
+ "ألوان":"Rouge|أحمر;Bleu|أزرق;Vert|أخضر;Jaune|أصفر;Noir|أسود;Blanc|أبيض",
+ "حيوانات":"Chat|قطة;Chien|كلب;Oiseau|طائر;Poisson|سمكة;Cheval|حصان;Lion|أسد",
+ "العائلة":"Mère|أم;Père|أب;Frère|أخ;Sœur|أخت;Grand-père|جد;Grand-mère|جدة;Fils|ابن;Fille|ابنة;Oncle|عم أو خال;Tante|عمة أو خالة;Cousin|ابن العم;Mari|زوج;Femme|زوجة;Bébé|رضيع;Famille|عائلة;Parents|الوالدان",
+ "الطعام":"Pain|خبز;Eau|ماء;Lait|حليب;Pomme|تفاحة;Œuf|بيضة;Riz|أرز;Viande|لحم;Thé|شاي;Fruit|فاكهة;Légumes|خضروات;Fromage|جبن;Soupe|حساء;Sucre|سكر;Sel|ملح;Jus|عصير;Poulet|دجاج;Pomme de terre|بطاطس;Orange|برتقالة",
+ "الجسم":"Tête|رأس;Main|يد;Œil|عين;Oreille|أذن;Nez|أنف;Bouche|فم;Pied|قدم",
+ "البرمجة":"Code|شيفرة;Programme|برنامج;Variable|متغيّر;Fonction|دالة;Boucle|حلقة تكرارية;Condition|شرط;Tableau|مصفوفة;Bogue|خطأ برمجي;Fichier|ملف;Serveur|خادم;Base de données|قاعدة بيانات;Algorithme|خوارزمية;Site web|موقع إلكتروني;Mot de passe|كلمة المرور;Clavier|لوحة المفاتيح;Écran|شاشة",
+ "ويب HTML/CSS/JS":"Balise|وسم;Attribut|سمة;Élément|عنصر;Lien|رابط;Image|صورة;Bouton|زر;Style|نمط;Couleur|لون;Événement|حدث;Script|سكربت;Classe|فئة;Marge|هامش;Bordure|حد;Texte|نص;Page|صفحة"}},
+en:{n:"English",v:"en-US",dir:"ltr",
+ w:{"تحيات":"Hello|مرحبا;Goodbye|مع السلامة;Thank you|شكرًا;Please|من فضلك;Yes|نعم;No|لا;Good morning|صباح الخير;Good night|تصبح على خير",
+ "أرقام":"One|1 · واحد;Two|2 · اثنان;Three|3 · ثلاثة;Four|4 · أربعة;Five|5 · خمسة;Six|6 · ستة;Seven|7 · سبعة;Eight|8 · ثمانية;Nine|9 · تسعة;Ten|10 · عشرة",
+ "ألوان":"Red|أحمر;Blue|أزرق;Green|أخضر;Yellow|أصفر;Black|أسود;White|أبيض",
+ "حيوانات":"Cat|قطة;Dog|كلب;Bird|طائر;Fish|سمكة;Horse|حصان;Lion|أسد",
+ "العائلة":"Mother|أم;Father|أب;Brother|أخ;Sister|أخت;Grandfather|جد;Grandmother|جدة;Son|ابن;Daughter|ابنة;Uncle|عم أو خال;Aunt|عمة أو خالة;Cousin|ابن العم;Husband|زوج;Wife|زوجة;Baby|رضيع;Family|عائلة;Parents|الوالدان",
+ "الطعام":"Bread|خبز;Water|ماء;Milk|حليب;Apple|تفاحة;Egg|بيضة;Rice|أرز;Meat|لحم;Tea|شاي;Fruit|فاكهة;Vegetables|خضروات;Cheese|جبن;Soup|حساء;Sugar|سكر;Salt|ملح;Juice|عصير;Chicken|دجاج;Potato|بطاطس;Orange|برتقالة",
+ "الجسم":"Head|رأس;Hand|يد;Eye|عين;Ear|أذن;Nose|أنف;Mouth|فم;Foot|قدم",
+ "البرمجة":"Code|شيفرة;Program|برنامج;Variable|متغيّر;Function|دالة;Loop|حلقة تكرارية;Condition|شرط;Array|مصفوفة;Bug|خطأ برمجي;File|ملف;Server|خادم;Database|قاعدة بيانات;Algorithm|خوارزمية;Website|موقع إلكتروني;Password|كلمة المرور;Keyboard|لوحة المفاتيح;Screen|شاشة",
+ "ويب HTML/CSS/JS":"Tag|وسم;Attribute|سمة;Element|عنصر;Link|رابط;Image|صورة;Button|زر;Style|نمط;Color|لون;Event|حدث;Script|سكربت;Class|فئة;Margin|هامش;Border|حد;Text|نص;Page|صفحة"}}
+};
+const SENT={en:"I am a student|أنا تلميذ;She likes tea|هي تحب الشاي;The cat is small|القطة صغيرة;We eat bread|نحن نأكل الخبز;My father is here|أبي هنا;I drink water|أنا أشرب الماء;My mother cooks rice|أمي تطبخ الأرز;The baby drinks milk|الرضيع يشرب الحليب;I love my family|أنا أحب عائلتي;He eats an apple|هو يأكل تفاحة;My sister is tall|أختي طويلة;We drink tea|نحن نشرب الشاي;The bird is blue|الطائر أزرق;My grandfather is old|جدي كبير;I write code|أنا أكتب الشيفرة;The program has a bug|في البرنامج خطأ;The server is slow|الخادم بطيء;Save the file|احفظ الملف;The button is blue|الزر أزرق;Click the link|اضغط على الرابط;The page has an image|في الصفحة صورة;Change the color|غيّر اللون",
+fr:"Je suis élève|أنا تلميذ;Elle aime le thé|هي تحب الشاي;Le chat est petit|القط صغير;Nous mangeons du pain|نحن نأكل الخبز;Mon père est ici|أبي هنا;Je bois de l’eau|أنا أشرب الماء;Ma mère cuit le riz|أمي تطبخ الأرز;Le bébé boit du lait|الرضيع يشرب الحليب;J’aime ma famille|أنا أحب عائلتي;Il mange une pomme|هو يأكل تفاحة;Ma sœur est grande|أختي طويلة;Nous buvons du thé|نحن نشرب الشاي;L’oiseau est bleu|الطائر أزرق;Mon grand-père est vieux|جدي كبير;J’écris du code|أنا أكتب الشيفرة;Le programme a un bogue|في البرنامج خطأ;Le serveur est lent|الخادم بطيء;Sauvegarde le fichier|احفظ الملف;Le bouton est bleu|الزر أزرق;Clique sur le lien|اضغط على الرابط;La page a une image|في الصفحة صورة;Change la couleur|غيّر اللون",
+ar:"أنا تلميذ|I am a student · Je suis élève;هي تحب الشاي|She likes tea · Elle aime le thé;القطة صغيرة|The cat is small · Le chat est petit;نحن نأكل الخبز|We eat bread · Nous mangeons du pain;أبي هنا|My father is here · Mon père est ici;أنا أشرب الماء|I drink water · Je bois de l’eau;أمي تطبخ الأرز|My mother cooks rice · Ma mère cuit le riz;الرضيع يشرب الحليب|The baby drinks milk · Le bébé boit du lait;أنا أحب عائلتي|I love my family · J’aime ma famille;هو يأكل تفاحة|He eats an apple · Il mange une pomme;أختي طويلة|My sister is tall · Ma sœur est grande;نحن نشرب الشاي|We drink tea · Nous buvons du thé;الطائر أزرق|The bird is blue · L’oiseau est bleu;جدي كبير|My grandfather is old · Mon grand-père est vieux;أنا أكتب الشيفرة|I write code · J’écris du code;في البرنامج خطأ|The program has a bug · Le programme a un bogue;الخادم بطيء|The server is slow · Le serveur est lent;احفظ الملف|Save the file · Sauvegarde le fichier;الزر أزرق|The button is blue · Le bouton est bleu;اضغط على الرابط|Click the link · Clique sur le lien;في الصفحة صورة|The page has an image · La page a une image;غيّر اللون|Change the color · Change la couleur"};
+const TABS=[["letters","الحروف"],["words","المفردات"],["order","جمل"],["quiz","اختبار"],["speak","نطق"]];
+let lang="en",tab="letters",Q=null;
+const $=id=>document.getElementById(id);
+const P=s=>s.split(";").map(x=>x.split("|"));
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+function words(){return Object.values(L[lang].w).flatMap(P)}
+let VO=[];
+function loadV(){try{VO=speechSynthesis.getVoices()}catch(e){}}
+loadV();try{speechSynthesis.onvoiceschanged=()=>{loadV();updateWarn()}}catch(e){}
+function findV(){const c=L[lang].v.toLowerCase(),p=c.slice(0,2);return VO.find(x=>x.lang.toLowerCase().replace("_","-")==c)||VO.find(x=>x.lang.toLowerCase().startsWith(p))}
+function speak(t){try{const u=new SpeechSynthesisUtterance(t),v=findV();if(v){u.voice=v;u.lang=v.lang}else u.lang=L[lang].v;u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function updateWarn(){$("warn").innerHTML=findV()?"":`<div class="box mut" style="margin-bottom:12px">لم يُعثر على صوت ${L[lang].n} في جهازك، لذلك قد لا يُسمع النطق. على أندرويد: الإعدادات ← النظام (أو الإدارة العامة) ← اللغة ← تحويل النص إلى كلام ← محرك Google ← تثبيت بيانات الصوت ← اختر ${L[lang].n}. ثم أعد فتح الصفحة.</div>`}
+function getBest(){try{return +localStorage.getItem("lt_best_"+lang)||0}catch(e){return 0}}
+function setBest(n){try{localStorage.setItem("lt_best_"+lang,n)}catch(e){}}
+function head(){
+ $("langs").innerHTML=Object.keys(L).map(k=>`<button class="${k==lang?"on":""}" onclick="setLang('${k}')">${L[k].n}</button>`).join("");
+ $("tabs").innerHTML=TABS.map(t=>`<button class="${t[0]==tab?"on":""}" onclick="setTab('${t[0]}')">${t[1]}</button>`).join("");
+}
+function setLang(k){lang=k;Q=null;go()}
+function setTab(t){tab=t;Q=null;go()}
+function go(){head();updateWarn();({letters,words:vocab,order:ordr,quiz,speak:pron})[tab]()}
+function say(i){speak(window._s[i])}
+function letters(){
+ let h;
+ if(lang=="ar"){window._s=P(L.ar.let).map(x=>x[1]);
+  h=P(L.ar.let).map((x,i)=>`<div class="let" onclick="say(${i})"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("")}
+ else{const A="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");window._s=A;
+  h=A.map((c,i)=>`<div class="let" onclick="say(${i})"><b dir="ltr">${c}${c.toLowerCase()}</b></div>`).join("")}
+ $("main").innerHTML=`<p class="mut">اضغط على أي حرف لتسمع نطقه.</p><div class="grid">${h}</div>`;
+}
+function vocab(){
+ let h="",i=0;window._s=[];
+ for(const [cat,s] of Object.entries(L[lang].w)){
+  h+=`<h3>${cat}</h3>`;
+  for(const [t,m] of P(s)){window._s.push(t);
+   h+=`<div class="w" onclick="say(${i++})"><span class="t" dir="${L[lang].dir}">${t}</span><span class="m">${m} 🔊</span></div>`}}
+ $("main").innerHTML=h;
+}
+function quiz(){
+ const pool=words();
+ if(!Q){Q={i:0,s:0,items:shuf(pool).slice(0,10).map(p=>{
+   const type=Math.random()<.5?0:1,others=shuf(pool.filter(x=>x[0]!=p[0])).slice(0,3);
+   return{p,type,opts:shuf([p,...others])}})}}
+ if(Q.i>=10){
+  const b=getBest();if(Q.s>b)setBest(Q.s);
+  $("main").innerHTML=`<div class="c"><div class="big">${Q.s} / 10</div><p>${Q.s>=8?"ممتاز! 🌟":Q.s>=5?"جيد، واصل التدرّب":"لا بأس، أعد المحاولة"}</p><p class="mut">أفضل نتيجة: ${Math.max(b,Q.s)} / 10</p><button class="act" onclick="Q=null;quiz()">اختبار جديد</button></div>`;return}
+ const it=Q.items[Q.i],d=L[lang].dir;
+ const ask=it.type==0?`<div class="big" dir="${d}">${it.p[0]}</div><p class="c">ما معنى هذه الكلمة؟</p>`:`<div class="c"><button class="act" onclick="speak('${it.p[0].replace(/'/g,"’")}')">🔊 استمع</button></div><p class="c">اختر الكلمة التي سمعتها</p>`;
+ $("main").innerHTML=`<div class="bar"><i style="width:${Q.i*10}%"></i></div>${ask}<div class="opts">${it.opts.map((o,k)=>`<button class="opt" dir="${it.type==1?d:"auto"}" onclick="pick(${k},this)">${it.type==0?o[1]:o[0]}</button>`).join("")}</div>`;
+ if(it.type==1)speak(it.p[0]);
+}
+function pick(k,el){
+ const it=Q.items[Q.i],ok=it.opts[k][0]==it.p[0];
+ document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(it.opts[j][0]==it.p[0])b.classList.add("ok")});
+ if(!ok)el.classList.add("bad");else Q.s++;
+ speak(it.p[0]);
+ setTimeout(()=>{Q.i++;quiz()},1200);
+}
+let O=null;
+function ordr(){
+ if(!O){const [s,g]=shuf(P(SENT[lang]))[0];O={s,g,pool:shuf(s.split(" ").map((w,i)=>({w,i}))),sel:[]}}
+ odraw();
+}
+function odraw(){
+ const d=L[lang].dir,sel=O.sel.map((i,k)=>`<span class="chip" onclick="orem(${k})">${O.pool.find(x=>x.i==i).w}</span>`).join("");
+ const rest=O.pool.filter(x=>!O.sel.includes(x.i)).map(x=>`<span class="chip" onclick="oadd(${x.i})">${x.w}</span>`).join("");
+ $("main").innerHTML=`<p class="c">رتّب الكلمات لتكوين جملة صحيحة:</p><p class="c mut">${O.g}</p><div class="ans" dir="${d}">${sel}</div><div dir="${d}" class="c">${rest}</div><div class="c"><button class="act" onclick="ocheck()">تحقق</button><button class="act" onclick="O.sel=[];odraw()">إعادة</button><button class="act" onclick="O=null;ordr()">جملة أخرى</button></div><div class="msg" id="om"></div>`;
+}
+function oadd(i){O.sel.push(i);odraw()}
+function orem(k){O.sel.splice(k,1);odraw()}
+function ocheck(){
+ const a=O.sel.map(i=>O.pool.find(x=>x.i==i).w).join(" ");
+ if(a==O.s){$("om").innerHTML=`<span style="color:var(--ok)">✔ أحسنت! ${O.s}</span>`;speak(O.s)}
+ else $("om").innerHTML=`<span style="color:var(--bad)">ليست صحيحة بعد، حاول مرة أخرى</span>`;
+}
+let cur=null;
+function pron(){
+ const p=shuf(words())[0];cur=p;
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ $("main").innerHTML=`<p class="mut c">استمع ثم انطق الكلمة بصوتك.</p><div class="big" dir="${L[lang].dir}">${p[0]}</div><p class="c mut">${p[1]}</p>
+ <div class="c"><button class="act" onclick="speak(cur[0])">🔊 استمع</button>${SR?`<button class="act" onclick="listen()">🎤 انطق</button>`:""}<button class="act" onclick="pron()">كلمة أخرى</button></div>
+ <div class="msg" id="pm">${SR?"":"ميزة التعرّف على الصوت غير متوفرة في هذا المتصفح؛ جرّب Chrome أو Edge. يمكنك مع ذلك الاستماع والتكرار."}</div>`;
+}
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f\u064b-\u065f.,!?’']/g,"").trim()}
+function listen(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition,r=new SR();
+ r.lang=L[lang].v;$("pm").textContent="أنصت إليك…";
+ r.onresult=e=>{const t=e.results[0][0].transcript,ok=norm(t)==norm(cur[0]);
+  $("pm").innerHTML=ok?`<span style="color:var(--ok)">✔ نطق صحيح!</span> (${t})`:`<span style="color:var(--bad)">سمعتُ: ${t}</span> — حاول مرة أخرى`};
+ r.onerror=()=>{$("pm").textContent="تعذّر التسجيل. تأكد من السماح باستعمال الميكروفون."};
+ try{r.start()}catch(e){}
+}
+go();
+</script>
+</body>
+</html>
